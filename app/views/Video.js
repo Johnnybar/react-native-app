@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, FlatList, Image, TouchableWithoutFeedback} from 'react-native';
+import {api} from '../secrets.json'
 
 export class Video extends React.Component {
   static navigationOptions ={
@@ -10,19 +11,21 @@ export class Video extends React.Component {
     this.state = {listLoaded:false}
   }
   componentDidMount(){
-    return fetch('https://googleapis.com/youtube/v3/search?part=snippet&q=pluralsight&type=video&key=AIzaSyCIXvWMsiesGt6dc7PR4ZqpApNHsDHnlm0')
+    return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=pluralsight&type=video&key=${api}`)
     .then((response)=> response.json())
-    .then((response)=> {
+    .then((responseJson)=> {
+      console.log(responseJson );
       this.setState({
         listLoaded: true,
-        videoList: Array.from(response.items)
+        videoList: Array.from(responseJson.items)
       })
     })
-    .catch((errror)=>{
+    .catch((error)=>{
       console.error(error);
     })
   }
     render() {
+      const {navigate} = this.props.navigation
       return (
         <View>
           {this.state.listLoaded && (
@@ -30,6 +33,7 @@ export class Video extends React.Component {
               <FlatList data = {this.state.videoList}
                 renderItem = {({item})=>
                 <TubeItem
+                  navigate = {navigate}
                   id = {item.id.videoId}
                   title = {item.snippet.title}
                   imageSrc = {item.snippet.thumbnails.high.url}
@@ -52,7 +56,7 @@ export class Video extends React.Component {
   export class TubeItem extends React.Component {
 
     onPress = () => {
-      console.log(this.props.id);
+      this.props.navigate('VideoDetailRT', {ytubeId: this.props.id})
     }
 
     render(){

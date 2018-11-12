@@ -5,6 +5,8 @@ import  Contact  from './app/views/Contact.js';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import {StackNavigator} from 'react-navigation'
 // import AppNavigator from './navigation/AppNavigator';
+import {Video} from './app/views/Video.js'
+import {VideoDetail} from './app/views/VideoDetail.js'
 
 const MyRoutes = StackNavigator({
   HomeRT:{
@@ -13,6 +15,12 @@ const MyRoutes = StackNavigator({
   ContactRT:{
     screen: Contact
   },
+  LessonRT: {
+    screen: Video
+  },
+  VideoDetailRT: {
+    screen: VideoDetail
+  }
 },
 {
   InitialRouteName: 'HomeRT'
