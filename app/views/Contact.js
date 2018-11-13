@@ -31,9 +31,10 @@ export default class Contact extends React.Component {
     this.props.navigation.goBack()
   }
     render() {
+      const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Header message = "Press to Log In" />
+        <Header navigate = {navigate} message = "Press to Log In" />
         <Text style={styles.heading}>Contact Us</Text>
         <TextInput
           style={styles.inputs}
